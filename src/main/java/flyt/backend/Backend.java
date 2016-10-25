@@ -1,9 +1,13 @@
 package flyt.backend;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * @author Fredrik
  */
 public class Backend {
+
+    private ObjectMapper mapper = new ObjectMapper();
 
     /**
      * Get single instance of Backend, not threadsafe yet
