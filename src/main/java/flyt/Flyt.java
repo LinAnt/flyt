@@ -11,6 +11,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import flyt.backend.Backend;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -24,6 +25,9 @@ public class Flyt extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+
+        Backend backend = Backend.getInstance();
+
         final VerticalLayout layout = new VerticalLayout();
         
         final TextField name = new TextField();
