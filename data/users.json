@@ -1,10 +1,7 @@
-{
-  "admin": {
+[{ "username":"admin",
     "password":"admin",
-    "groups":"admin,user"
-  },
-  "user": {
+    "groups":["admin","user"] },
+  { "username": "user",
     "password":"user",
-    "groups":"user"
-  }
-}
+    "groups":["user"] }
+]

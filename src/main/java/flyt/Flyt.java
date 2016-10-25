@@ -12,6 +12,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import flyt.backend.Backend;
+import flyt.common.AccessDenied;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
