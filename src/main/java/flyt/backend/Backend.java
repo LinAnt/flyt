@@ -1,6 +1,8 @@
 package flyt.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.google.common.collect.Lists;
 import flyt.common.*;
 
 import java.io.File;
@@ -32,7 +34,7 @@ public class Backend {
     }
 
     private Backend() {
-
+        mapper.registerModule( new JodaModule() );
     }
 
     /**
@@ -79,7 +81,7 @@ public class Backend {
      * @throws FlytException on error
      */
     public List<Data> getDataForServerId( String serverId ) throws FlytException {
-        List<Data> validData = new ArrayList();
+        List<Data> validData = Lists.newArrayList();
         for ( String dataFile : getDataList() ) {
             Data data = getData( dataFile );
             if ( data.header.senderId.equals( serverId ) ) {
@@ -94,7 +96,7 @@ public class Backend {
      * @return a list of data files, never null
      */
     public List<String> getDataList() {
-        List<String> files = new ArrayList();
+        List<String> files = Lists.newArrayList();
         File dir = new File( DATA_DIRECTORY );
         for ( File file : dir.listFiles() ) {
             if ( file.getName().startsWith( "data" ) ) {
