@@ -15,6 +15,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import flyt.backend.Backend;
 import flyt.common.AccessDenied;
+import flyt.common.Customer;
 import flyt.common.Data;
 import flyt.common.FlytException;
 
@@ -37,6 +38,7 @@ public class Flyt extends UI {
         Backend backend = Backend.getInstance();
         Data data = null;
         try {
+            List<Customer> customers = backend.getCustomers();
             List<String> files = backend.getDataList();
             for ( String file : files ) {
                 System.out.println( "Found file: " + file );
