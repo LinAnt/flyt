@@ -38,7 +38,11 @@ public class Flyt extends UI {
         name.setCaption("Type your name here:");
 
         final Label l = new Label();
-        l.setId( "testchart-container" );
+        l.setId( "linechart-container" );
+        final Label p = new Label();
+        p.setId( "piechart-container" );
+        final Label b = new Label();
+        b.setId( "barchart-container" );
 
         Button button = new Button("Click Me");
         button.addClickListener( e -> {
@@ -46,14 +50,14 @@ public class Flyt extends UI {
                     + ", it works!"));
         });
         
-        layout.addComponents(name, button, l);
+        layout.addComponents(name, button, l, p, b);
         layout.setMargin(true);
         layout.setSpacing(true);
         
         setContent(layout);
 
         //how should data be sent
-        final String tmpData = "[[0, 0, 0],   [1, 10, 5],   [2, 23, 15],  [3, 17, 9],   [4, 18, 10],  [5, 9, 5]," +
+        final String tmpLineData = "[[0, 0, 0],   [1, 10, 5],   [2, 23, 15],  [3, 17, 9],   [4, 18, 10],  [5, 9, 5]," +
                 "[6, 11, 3],   [7, 27, 19],  [8, 33, 25],  [9, 40, 32],  [10, 32, 24], [11, 35, 27]," +
                 "[12, 30, 22], [13, 40, 32], [14, 42, 34], [15, 47, 39], [16, 44, 36], [17, 48, 40]," +
                 "[18, 52, 44], [19, 54, 46], [20, 42, 34], [21, 55, 47], [22, 56, 48], [23, 57, 49]," +
@@ -65,11 +69,17 @@ public class Flyt extends UI {
                 "[54, 71, 63], [55, 72, 64], [56, 73, 65], [57, 75, 67], [58, 70, 62], [59, 68, 60]," +
                 "[60, 64, 56], [61, 60, 52], [62, 65, 57], [63, 67, 59], [64, 68, 60], [65, 69, 61]," +
                 "[66, 70, 62], [67, 72, 64], [68, 75, 67], [69, 80, 72]]";
-        final String options = "{columns:['doges','cates'], " +
-                "container: 'testchart-container'," +
+        final String lineOptions = "{columns:['doges','cates'], " +
+                "container: 'linechart-container'," +
                 "haxis:'hurrisontal'," +
                 "vaxis:'vertikulis'}";
-        Page.getCurrent().getJavaScript().execute("graph.createLineChart("+tmpData+","+options+")");
+        Page.getCurrent().getJavaScript().execute("graph.createLineChart("+tmpLineData+","+lineOptions+")");
+
+        final String tmpPieData = "[['Task', 'Hours per Day'],['Work',11]," +
+                "['Eat',20],['Commute',2]," +
+                "['Gaming',91],['Sleep',7]]";
+        final String pieOptions = "{title:'Piechart',container:'piechart-container'}";
+        Page.getCurrent().getJavaScript().execute("graph.createPieChart("+tmpPieData+","+pieOptions+")");
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
