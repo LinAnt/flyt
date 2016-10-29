@@ -15,6 +15,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import flyt.backend.Backend;
 import flyt.common.AccessDenied;
+import flyt.common.Data;
+import flyt.common.FlytException;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -31,6 +33,12 @@ public class Flyt extends UI {
     protected void init(VaadinRequest vaadinRequest) {
 
         Backend backend = Backend.getInstance();
+        Data data = null;
+        try {
+            data = backend.getData("data1.json");
+        } catch ( FlytException fe ) {
+            System.out.println( fe.getMessage() );
+        }
 
         final VerticalLayout layout = new VerticalLayout();
         

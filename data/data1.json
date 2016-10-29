@@ -1,0 +1,22 @@
+{
+  "header": {
+    "version":1,
+    "senderId":"Fredriks test server #4",
+    "date":"2016-10-25T10:02Z"
+  },
+  "hotels":[{
+      "name":"Hotel California",
+      "rooms":42
+    }, {
+      "name":"Fredriks B&B",
+      "rooms":1
+    }]
+  ,
+  "networks": [{
+    "name":"Watson",
+    "devices":41
+  },{
+    "name":"Smooth operator",
+    "devices":25
+  }]
+}

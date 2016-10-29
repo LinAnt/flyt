@@ -2,6 +2,8 @@ package flyt.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import flyt.common.AccessDenied;
+import flyt.common.Data;
+import flyt.common.FlytException;
 import flyt.common.User;
 
 import java.io.File;
@@ -12,6 +14,8 @@ import java.util.List;
  * @author Fredrik
  */
 public class Backend {
+
+    public static final String DATA_DIRECTORY = "data/";
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -42,9 +46,7 @@ public class Backend {
      */
     public boolean authenticateUser( String username, String password ) throws AccessDenied {
         try {
-            System.out.println( "blah" );
-            List<User> users = mapper.readValue( new File( "data/users.json"), mapper.getTypeFactory().constructCollectionType( List.class, User.class ) );
-            System.out.println( "tjo" );
+            List<User> users = mapper.readValue( new File( DATA_DIRECTORY + "users.json"), mapper.getTypeFactory().constructCollectionType( List.class, User.class ) );
             for ( User user : users ) {
                 if ( user.username.equals( username ) && user.password.equals( password ) ) {
                     return true;
@@ -57,5 +59,13 @@ public class Backend {
         throw new AccessDenied( "Username and password not valid" );
     }
 
+    public Data getData(String dataFile ) throws FlytException {
+        try {
+            Data data = mapper.readValue(new File(DATA_DIRECTORY + dataFile), Data.class);
+            return data;
+        } catch ( IOException ioe ) {
+            throw new FlytException( "ioerror: " + ioe.getMessage() );
+        }
+    }
 
 }
