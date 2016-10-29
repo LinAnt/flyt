@@ -18,6 +18,8 @@ import flyt.common.AccessDenied;
 import flyt.common.Data;
 import flyt.common.FlytException;
 
+import java.util.List;
+
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
  * (or tab) or some part of a html page where a Vaadin application is embedded.
@@ -35,7 +37,11 @@ public class Flyt extends UI {
         Backend backend = Backend.getInstance();
         Data data = null;
         try {
-            data = backend.getData("data1.json");
+            List<String> files = backend.getDataList();
+            for ( String file : files ) {
+                System.out.println( "Found file: " + file );
+                data = backend.getData( file );
+            }
         } catch ( FlytException fe ) {
             System.out.println( fe.getMessage() );
         }

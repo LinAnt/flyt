@@ -8,6 +8,7 @@ import flyt.common.User;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,6 +67,17 @@ public class Backend {
         } catch ( IOException ioe ) {
             throw new FlytException( "ioerror: " + ioe.getMessage() );
         }
+    }
+
+    public List<String> getDataList() {
+        List<String> files = new ArrayList();
+        File dir = new File( DATA_DIRECTORY );
+        for ( File file : dir.listFiles() ) {
+            if ( file.getName().startsWith( "data" ) ) {
+                files.add( file.getName() );
+            }
+        }
+        return files;
     }
 
 }
