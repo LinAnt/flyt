@@ -73,6 +73,23 @@ public class Backend {
     }
 
     /**
+     * Get data for a specific server
+     * @param serverId server/source id
+     * @return a list of data belonging to server
+     * @throws FlytException on error
+     */
+    public List<Data> getDataForServerId( String serverId ) throws FlytException {
+        List<Data> validData = new ArrayList();
+        for ( String dataFile : getDataList() ) {
+            Data data = getData( dataFile );
+            if ( data.header.senderId.equals( serverId ) ) {
+                validData.add( data );
+            }
+        }
+        return validData;
+    }
+
+    /**
      * Get a list of all available data files
      * @return a list of data files, never null
      */
