@@ -76,7 +76,7 @@ public class ServerLineChartData implements LineChartDataAdapter {
             for ( Network network : data.networks ) {
                 ret += network.devices + ",";
             }
-            ret += "]";
+            ret += "],";
             i ++;
         }
         ret += "]";

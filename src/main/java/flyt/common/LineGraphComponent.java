@@ -56,10 +56,10 @@ public class LineGraphComponent extends CustomComponent implements Chart {
 
     public void setOptions(String columns, String ContainerID, String haxis, String vaxis){
 
-        this.lineOptions = "{columns: "+ columns+
-                ", container: "+ContainerID+
-                ", haxis: "+ haxis+
-                ", vaxis: "+ vaxis+"}";
+        this.lineOptions = "{columns: ["+ columns+
+                "], container: '"+ContainerID+
+                "', haxis: '"+ haxis+
+                "', vaxis: '"+ vaxis+"'}";
         System.out.println(this.lineOptions);
 
     }

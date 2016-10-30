@@ -77,7 +77,7 @@ public class MainView extends MainDesign {
 
             LineGraphComponent LGC = new LineGraphComponent();
             LGC.setLineData(latestline.getDataAsJson());
-            LGC.setOptions("'doges','cates'","server-line", latestline.getHorizontalAxisName(), latestline.getVerticalAxisName());
+            LGC.setOptions("'doges','cates', 'doges', 'cates'","server-line", latestline.getHorizontalAxisName(), latestline.getVerticalAxisName());
 
             LGC.run();
 
