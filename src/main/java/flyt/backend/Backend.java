@@ -2,8 +2,11 @@ package flyt.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
 import flyt.common.*;
+import org.joda.time.DateTime;
 
 import java.io.File;
 import java.io.IOException;
@@ -88,7 +91,12 @@ public class Backend {
                 validData.add( data );
             }
         }
-        return validData;
+        Ordering<Data> byDate = Ordering.natural().onResultOf( new Function<Data, DateTime>() {
+            public DateTime apply( Data data ) {
+                return data.header.date;
+            }
+        } );
+        return byDate.immutableSortedCopy( validData );
     }
 
     /**
@@ -114,7 +122,12 @@ public class Backend {
     public List<Customer> getCustomers() throws FlytException {
         try {
             List<Customer> customers = mapper.readValue(new File(DATA_DIRECTORY + "customers.json"), mapper.getTypeFactory().constructCollectionType(List.class, Customer.class));
-            return customers;
+            Ordering<Customer> byName = Ordering.natural().nullsFirst().onResultOf( new Function<Customer, String>() {
+                public String apply( Customer customer ) {
+                    return customer.name;
+                }
+            } );
+            return byName.immutableSortedCopy( customers );
         } catch ( IOException ioe ) {
             throw new FlytException( "ioe: " + ioe.getMessage() );
         }
