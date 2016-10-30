@@ -42,7 +42,7 @@ public class LatestServerStatePieChartData implements PieChartDataAdapter {
     public String getDataAsJson() {
         String ret = "[['Name','Devices']";
         for ( PieChartPiece piece : getData() ) {
-            ret += ",['" + piece.name + "','" + piece.value + "']";
+            ret += ",['" + piece.name + "'," + piece.value + "]";
         }
         ret += "]";
         return ret;

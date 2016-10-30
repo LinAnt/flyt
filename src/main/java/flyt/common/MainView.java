@@ -4,7 +4,6 @@ import com.vaadin.data.Property;
 import com.vaadin.ui.*;
 import flyt.adapter.LatestServerStatePieChartData;
 import flyt.backend.Backend;
-import javafx.scene.chart.PieChart;
 
 import java.util.Arrays;
 import java.util.LinkedList;
