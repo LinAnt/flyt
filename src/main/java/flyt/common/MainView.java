@@ -21,13 +21,18 @@ public class MainView extends MainDesign {
             for (Customer C : customerList) {
                 customerListSelect.addItem(C.name);
             }
+            MenuBar.MenuItem menuItem = serverBar.getItems().get(0);
+            for ( Customer c : customerList ) {
+                for ( String server : c.servers ) {
+                    menuItem.addItem(server, (MenuBar.Command) mi -> System.out.println( server ));
+                }
+            }
+            logoutButton.addClickListener(e -> {
+                System.out.println("User Logged Out");
+            });
         } catch ( FlytException fe ) {
                 // fix better error handling
-            }
-        serverBar.getItems().get(0).addItem("Server4", (MenuBar.Command) menuItem -> System.out.println("Server4"));
-        logoutButton.addClickListener(e -> {
-            System.out.println("User Logged Out");
-        });
+        }
     }
     public VerticalLayout getContent(){
 
