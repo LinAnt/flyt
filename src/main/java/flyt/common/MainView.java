@@ -4,8 +4,10 @@ import com.vaadin.data.Property;
 import com.vaadin.ui.*;
 import flyt.adapter.LatestServerStatePieChartData;
 import flyt.backend.Backend;
+import javafx.scene.chart.PieChart;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -49,7 +51,7 @@ public class MainView extends MainDesign {
         content.removeAllComponents();
         content.addComponent(l);
     }
-    private void setContent(Component[] c){
+    private void setContent(List<Component> c){
         content.removeAllComponents();
         for(Component a : c){
            content.addComponent(a);
@@ -58,12 +60,18 @@ public class MainView extends MainDesign {
 
     private void DisplayServerStats(String server) {
         try {
-
+            LinkedList<Component> cList = new LinkedList<>();
             LatestServerStatePieChartData latest = new LatestServerStatePieChartData(Backend.getInstance(), server);
             System.out.println(latest.getTitle().toString());
-            System.out.println(Arrays.toString(latest.getData().toArray()));
+            System.out.println(latest.getDataAsJson());
             Label pieChart = new Label();
             pieChart.setId("LatestSS");
+            cList.add(pieChart);
+            setContent(cList);
+            PieChartComponent PCS = new PieChartComponent();
+            PCS.setPieData(latest.getDataAsJson());
+            PCS.setPieOptions(latest.getTitle(),"LatestSS");
+            PCS.run();
 
 
 

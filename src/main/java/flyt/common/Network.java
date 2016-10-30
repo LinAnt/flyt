@@ -8,5 +8,5 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Network {
     public String name = null;
-    public Integer devies = null;
+    public Integer devices = null;
 }

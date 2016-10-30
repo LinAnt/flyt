@@ -16,8 +16,9 @@ public class PieChartComponent extends CustomComponent implements Chart {
         this.pieData = pieData;
     }
 
-    public void setPieOptions(String pieOptions) {
-        this.pieOptions = pieOptions;
+    public void setPieOptions(String title, String container) {
+        this.pieOptions = "{title: '"+title+"',container:'"+container+"'}";
+        //  "{title:'Piechart',container:'piechart-container'}";
     }
 
     public PieChartComponent(){
@@ -27,6 +28,8 @@ public class PieChartComponent extends CustomComponent implements Chart {
 
     @Override
     public void run() {
+        System.out.println(this.pieData);
+        System.out.println(this.pieOptions);
         Page.getCurrent().getJavaScript().execute("graph.createPieChart("+this.pieData+","+this.pieOptions+")");
     }
 }

@@ -33,7 +33,7 @@ public class LatestServerStatePieChartData implements PieChartDataAdapter {
             pie.add( new PieChartPiece( hotel.name, hotel.rooms ) );
         }
         for (Network network : data.networks ) {
-            pie.add( new PieChartPiece( network.name, network.devies ) );
+            pie.add( new PieChartPiece( network.name, network.devices ) );
         }
         return pie;
     }
@@ -42,7 +42,7 @@ public class LatestServerStatePieChartData implements PieChartDataAdapter {
     public String getDataAsJson() {
         String ret = "[['Name','Devices']";
         for ( PieChartPiece piece : getData() ) {
-            ret += ",['" + piece.name + ',' + piece.value + ']';
+            ret += ",['" + piece.name + "','" + piece.value + "']";
         }
         ret += "]";
         return ret;
