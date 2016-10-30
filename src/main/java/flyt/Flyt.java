@@ -41,12 +41,8 @@ public class Flyt extends UI {
             System.out.println( fe.getMessage() );
         }
 
-        HorizontalLayout layout = new MainView();
-        LineGraphComponent lg =new LineGraphComponent();
-        String[] col = {"'doges'", "'cates'"};
+        MainView layout = new MainView();
 
-        lg.setOptions(col,"'linechart_container'","'horror'","'vertikalt'");
-        lg.run();
         setContent(layout);
 
 
