@@ -1,7 +1,19 @@
 Flyt
 ==============
 
-Template for a simple Vaadin application that only requires a Servlet 3.0 container to run.
+Problem description
+===================
+
+The company has multiple customer installations on servers all over the Internet. The
+companys billing department regularly needs to log into each and every server installation
+and fetch server statistics. Because billing department needs to know billing specifics.
+
+Our solution
+------------
+
+We propose that servers automatically starts sending statistics to a centralized server
+to the company. The product that we have created during the Vaadin course is a tool for 
+displaying this collected statistics.
 
 
 Workflow
