@@ -1,10 +1,10 @@
 {
-  view1 : [
-    { data : 'dummy' , width : '1' , type : "line", title : "ketchup" },
-    { data : 'dummy' , width : '2/3' , type : "line", , title : "random stuff" },
-    { data : 'dummy' , width : '1/3' , type : "pie", , title : "smurfar per färg" }
+  "view1" : [
+    { "data" : "dummy" , "width" : "1" , "type" : "line", "title" : "ketchup" },
+    { "data" : "dummy" , "width" : "2/3" , "type" : "line",  "title" : "random stuff" },
+    { "data" : "dummy" , "width" : "1/3" , "type" : "pie",  "title" : "smurfar per färg" }
   ],
-  view2 : [
-    { data : 'dummy' , width : '1' , type : "line", title : "ketchup" }
+  "view2" : [
+    { "data" : "dummy" , "width" : "1" , "type" : "line", "title" : "ketchup" }
   ]
 }
