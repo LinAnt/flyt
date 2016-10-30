@@ -12,12 +12,7 @@ public class MainView extends MainDesign {
     public MainView(){
         super();
         setContent();
-        serverBar.getItems().get(0).addItem("Server4", new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem menuItem) {
-                System.out.println("Server4");
-            }
-        });
+        serverBar.getItems().get(0).addItem("Server4", (MenuBar.Command) menuItem -> System.out.println("Server4"));
         logoutButton.addClickListener(e -> {
             System.out.println("User Logged Out");
         });

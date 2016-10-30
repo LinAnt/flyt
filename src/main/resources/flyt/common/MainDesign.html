@@ -13,14 +13,19 @@
        <strong>Flyt</strong> 
       </vaadin-label> 
      </vaadin-horizontal-layout> 
-     <vaadin-button icon="fonticon://FontAwesome/f03a" style-name="primary small valo-menu-toggle" plain-text _id="menuToggle">
+     <vaadin-button icon="fonticon://FontAwesome/f03a" style-name="primary small valo-menu-toggle" responsive plain-text _id="menuToggle">
        Menu 
      </vaadin-button> 
      <vaadin-css-layout style-name="valo-menuitems" _id="menuItems"> 
-      <vaadin-button icon="fonticon://FontAwesome/f007" primary-style-name="valo-menu-item" width-full plain-text _id="userButton">
-        User 
+      <vaadin-button icon="fonticon://FontAwesome/f007" primary-style-name="valo-menu-item" width-full plain-text _id="customerButton">
+        Customers 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f080" primary-style-name="valo-menu-item" _id="statusButton">
+      <vaadin-menu-bar width-full _id="serverBar"> 
+       <menu>
+         Servers 
+       </menu> 
+      </vaadin-menu-bar> 
+      <vaadin-button icon="fonticon://FontAwesome/f080" primary-style-name="valo-menu-item" height="31px" _id="statusButton">
         Show Statistics 
       </vaadin-button> 
       <vaadin-button icon="fonticon://FontAwesome/f08b" primary-style-name="valo-menu-item" plain-text _id="logoutButton">
@@ -29,11 +34,7 @@
      </vaadin-css-layout> 
     </vaadin-css-layout> 
    </vaadin-css-layout> 
-   <vaadin-vertical-layout spacing margin _id="content" :expand> 
-    <vaadin-label size-auto plain-text _id="linechart_container">
-      This will be a linechart 
-    </vaadin-label> 
-   </vaadin-vertical-layout> 
+   <vaadin-vertical-layout spacing margin _id="content" :expand></vaadin-vertical-layout> 
   </vaadin-horizontal-layout>  
  </body>
 </html>
