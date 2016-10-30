@@ -18,4 +18,10 @@ public interface PieChartDataAdapter {
      * @return a list of pie chart pieces
      */
     public List<PieChartPiece> getData();
+
+    /**
+     * Get data as Json string
+     * @return a json formated string
+     */
+    public String getDataAsJson();
 }
