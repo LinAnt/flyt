@@ -3,6 +3,8 @@ package flyt.common;
 import com.vaadin.data.Property;
 import com.vaadin.ui.*;
 import flyt.adapter.LatestServerStatePieChartData;
+import flyt.adapter.LineChartDataAdapter;
+import flyt.adapter.ServerLineChartData;
 import flyt.backend.Backend;
 import javafx.scene.chart.PieChart;
 
@@ -62,16 +64,27 @@ public class MainView extends MainDesign {
         try {
             LinkedList<Component> cList = new LinkedList<>();
             LatestServerStatePieChartData latest = new LatestServerStatePieChartData(Backend.getInstance(), server);
-            System.out.println(latest.getTitle().toString());
-            System.out.println(latest.getDataAsJson());
+            ServerLineChartData latestline = new ServerLineChartData(Backend.getInstance(), server, "Date", "Servers");
+
             Label pieChart = new Label();
-            pieChart.setId("LatestSS");
-            cList.add(pieChart);
-            setContent(cList);
+            pieChart.setId("latest-pie");
+            Label lineChart = new Label();
+            lineChart.setId("server-line");
+
             PieChartComponent PCS = new PieChartComponent();
             PCS.setPieData(latest.getDataAsJson());
-            PCS.setPieOptions(latest.getTitle(),"LatestSS");
+            PCS.setPieOptions(latest.getTitle(),"latest-pie");
             PCS.run();
+
+            LineGraphComponent LGC = new LineGraphComponent();
+            LGC.setLineData(latestline.getDataAsJson());
+            LGC.setOptions("'doges','cates'","server-line", latestline.getHorizontalAxisName(), latestline.getVerticalAxisName());
+
+            LGC.run();
+
+            cList.add(lineChart);
+            cList.add(pieChart);
+            setContent(cList);
 
 
 

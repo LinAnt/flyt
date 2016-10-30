@@ -37,7 +37,7 @@ public class ServerLineChartData implements LineChartDataAdapter {
         Multimap<String, Integer> linesMap = ArrayListMultimap.create();
         for ( Data data : allData ) {
             for ( Network network : data.networks ) {
-                linesMap.put( network.name, network.devies );
+                linesMap.put( network.name, network.devices );
             }
             for ( Hotel hotel : data.hotels ) {
                 linesMap.put( hotel.name, hotel.rooms );
@@ -74,7 +74,7 @@ public class ServerLineChartData implements LineChartDataAdapter {
                 ret += hotel.rooms + ",";
             }
             for ( Network network : data.networks ) {
-                ret += network.devies + ",";
+                ret += network.devices + ",";
             }
             ret += "]";
             i ++;

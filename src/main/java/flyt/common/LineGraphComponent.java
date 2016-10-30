@@ -40,7 +40,7 @@ public class LineGraphComponent extends CustomComponent implements Chart {
                 "[66, 70, 62], [67, 72, 64], [68, 75, 67], [69, 80, 72]]";
 
         this.lineOptions = "{columns:['doges','cates'], " +
-                    "container: 'linechart_container'," +
+                    "container: 'server-line'," +
                     "haxis:'hurrisontal'," +
                     "vaxis:'vertikulis'}";
 
@@ -54,9 +54,9 @@ public class LineGraphComponent extends CustomComponent implements Chart {
         this.lineData = lineData;
     }
 
-    public void setOptions(String[] columns, String ContainerID, String haxis, String vaxis){
+    public void setOptions(String columns, String ContainerID, String haxis, String vaxis){
 
-        this.lineOptions = "{columns: "+ Arrays.toString(columns)+
+        this.lineOptions = "{columns: "+ columns+
                 ", container: "+ContainerID+
                 ", haxis: "+ haxis+
                 ", vaxis: "+ vaxis+"}";
@@ -65,6 +65,7 @@ public class LineGraphComponent extends CustomComponent implements Chart {
     }
 
     public void run(){
+        System.out.println("graph.createLineChart("+this.lineData+","+this.lineOptions+")");
         Page.getCurrent().getJavaScript().execute("graph.createLineChart("+this.lineData+","+this.lineOptions+")");
     }
 }
