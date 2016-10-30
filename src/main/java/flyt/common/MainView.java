@@ -1,12 +1,11 @@
 package flyt.common;
 
 import com.vaadin.data.Property;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.ListSelect;
-import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import flyt.adapter.LatestServerStatePieChartData;
 import flyt.backend.Backend;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,7 +25,7 @@ public class MainView extends MainDesign {
             MenuBar.MenuItem menuItem = serverBar.getItems().get(0);
             for (Customer c : customerList) {
                 for (String server : c.servers) {
-                    menuItem.addItem(server, (MenuBar.Command) mi -> System.out.println(server));
+                    menuItem.addItem(server, (MenuBar.Command) mi -> DisplayServerStats(server));
                 }
             }
             customerListSelect.addValueChangeListener(new Property.ValueChangeListener() {
@@ -43,15 +42,37 @@ public class MainView extends MainDesign {
         }
     }
 
-    public VerticalLayout getContent(){
 
-        return content;
-
+    private void clearContent() {
+        Label l = new Label();
+        l.setValue("Please select a Customer, a Server or Check out the Statistics! :)");
+        content.removeAllComponents();
+        content.addComponent(l);
     }
-    private void clearContent(){
-            Label l = new Label();
-            l.setValue("Please select a Customer, a Server or Check out the Statistics! :)");
-            content.removeAllComponents();
-            content.addComponent(l);
+    private void setContent(Component[] c){
+        content.removeAllComponents();
+        for(Component a : c){
+           content.addComponent(a);
         }
     }
+
+    private void DisplayServerStats(String server) {
+        try {
+
+            LatestServerStatePieChartData latest = new LatestServerStatePieChartData(Backend.getInstance(), server);
+            System.out.println(latest.getTitle().toString());
+            System.out.println(Arrays.toString(latest.getData().toArray()));
+            Label pieChart = new Label();
+            pieChart.setId("LatestSS");
+
+
+
+
+    }
+        catch (FlytException fe){
+            // Implement ErrorHandling
+        }
+
+
+    }
+}
