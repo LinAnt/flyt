@@ -20,6 +20,9 @@ public class LineGraphComponent extends CustomComponent implements Chart {
     private String lineOptions;
 
 
+    public void setLineOptions(String lineOptions) {
+        this.lineOptions = lineOptions;
+    }
 
     public LineGraphComponent(){
 
