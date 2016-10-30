@@ -48,7 +48,7 @@ public class LatestServerStatePieChartData implements PieChartDataAdapter {
         for ( PieChartPiece piece : getData() ) {
             ret += ",['" + piece.name + ',' + piece.value + ']';
         }
-        ret += "}";
+        ret += "]";
         return ret;
     }
 }
