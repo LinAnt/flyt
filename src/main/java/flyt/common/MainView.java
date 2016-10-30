@@ -6,7 +6,6 @@ import flyt.adapter.LatestServerStatePieChartData;
 import flyt.adapter.LineChartDataAdapter;
 import flyt.adapter.ServerLineChartData;
 import flyt.backend.Backend;
-import javafx.scene.chart.PieChart;
 
 import java.util.Arrays;
 import java.util.LinkedList;
