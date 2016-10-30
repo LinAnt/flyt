@@ -17,6 +17,7 @@ public class MainView extends MainDesign {
         clearContent();
         try {
             List<Customer> customerList = Backend.getInstance().getCustomers();
+            customerListSelect.setNullSelectionAllowed( false );
             for (Customer C : customerList) {
                 customerListSelect.addItem(C.name);
             }
