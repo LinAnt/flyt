@@ -11,7 +11,7 @@ public class MainView extends MainDesign {
 
     public MainView(){
         super();
-        setContent();
+        clearContent();
         serverBar.getItems().get(0).addItem("Server4", (MenuBar.Command) menuItem -> System.out.println("Server4"));
         logoutButton.addClickListener(e -> {
             System.out.println("User Logged Out");
@@ -22,12 +22,10 @@ public class MainView extends MainDesign {
         return content;
 
     }
-    private void setContent(){
-        if (content.getComponentCount() == 0){
+    private void clearContent(){
             Label l = new Label();
             l.setValue("Please select a Server or Check out the Statistics! :)");
+            content.removeAllComponents();
             content.addComponent(l);
         }
     }
-
-}
