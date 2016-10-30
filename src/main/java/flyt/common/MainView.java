@@ -1,6 +1,8 @@
 package flyt.common;
 
+import com.google.common.base.Joiner;
 import com.vaadin.data.Property;
+import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import flyt.adapter.LatestServerStatePieChartData;
 import flyt.adapter.LineChartDataAdapter;
@@ -20,6 +22,11 @@ public class MainView extends MainDesign {
         super();
         clearContent();
         try {
+            customerButton.addClickListener( new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                }
+            });
             List<Customer> customerList = Backend.getInstance().getCustomers();
             customerListSelect.setNullSelectionAllowed(false);
             for (Customer C : customerList) {
@@ -77,7 +84,15 @@ public class MainView extends MainDesign {
 
             LineGraphComponent LGC = new LineGraphComponent();
             LGC.setLineData(latestline.getDataAsJson());
-            LGC.setOptions("'doges','cates', 'doges', 'cates'","server-line", latestline.getHorizontalAxisName(), latestline.getVerticalAxisName());
+            List<String> lineNames = latest.getLineNames();
+            String names = "";
+            for ( int i = 0; i < lineNames.size(); i ++ ) {
+                names += "'" + lineNames.get( i ) + "'";
+                if ( i != lineNames.size() - 1 ) {
+                    names += ",";
+                }
+            }
+            LGC.setOptions(names,"server-line", latestline.getHorizontalAxisName(), latestline.getVerticalAxisName());
 
             LGC.run();
 

@@ -38,6 +38,17 @@ public class LatestServerStatePieChartData implements PieChartDataAdapter {
         return pie;
     }
 
+    public List<String> getLineNames() {
+        List<String> names = Lists.newArrayList();
+        for ( Hotel hotel : data.hotels ) {
+            names.add( hotel.name );
+        }
+        for ( Network network : data.networks ) {
+            names.add( network.name );
+        }
+        return names;
+    }
+
     @Override
     public String getDataAsJson() {
         String ret = "[['Name','Devices']";
