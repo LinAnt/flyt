@@ -67,6 +67,7 @@ public class ServerLineChartData implements LineChartDataAdapter {
     @Override
     public String getDataAsJson() {
         String ret = "[";
+        int i = 0;
         for ( Data data : allData ) {
             ret += "[" + i + ",";
             for ( Hotel hotel : data.hotels ) {
@@ -76,6 +77,7 @@ public class ServerLineChartData implements LineChartDataAdapter {
                 ret += network.devies + ",";
             }
             ret += "]";
+            i ++;
         }
         ret += "]";
         return ret;

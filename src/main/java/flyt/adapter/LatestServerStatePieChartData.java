@@ -15,14 +15,10 @@ import java.util.List;
 public class LatestServerStatePieChartData implements PieChartDataAdapter {
 
     private final Data data;
-    private final String name;
-    private final String unit;
 
-    public LatestServerStatePieChartData( Backend backend, String serverId, String name, String unit ) throws FlytException {
+    public LatestServerStatePieChartData( Backend backend, String serverId ) throws FlytException {
         List<Data> allData = backend.getDataForServerId( serverId );
         data = allData.get( allData.size() - 1 );
-        this.name = name;
-        this.unit = unit;
     }
 
     @Override
@@ -44,7 +40,7 @@ public class LatestServerStatePieChartData implements PieChartDataAdapter {
 
     @Override
     public String getDataAsJson() {
-        String ret = "[['" + name + "','" + unit + "']";
+        String ret = "[['Name','Devices']";
         for ( PieChartPiece piece : getData() ) {
             ret += ",['" + piece.name + ',' + piece.value + ']';
         }
