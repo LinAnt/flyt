@@ -17,10 +17,14 @@ import java.util.List;
  */
 public class ServerLineChartData implements LineChartDataAdapter {
 
+    private String verticalName;
+    private String horizontalName;
     private final List<Data> allData;
 
-    public ServerLineChartData(Backend backend, String serverId ) throws FlytException {
+    public ServerLineChartData(Backend backend, String serverId, String verticalName, String horizontalName ) throws FlytException {
         allData = backend.getDataForServerId( serverId );
+        this.verticalName = verticalName;
+        this.horizontalName = horizontalName;
     }
 
     @Override
@@ -52,11 +56,28 @@ public class ServerLineChartData implements LineChartDataAdapter {
 
     @Override
     public String getVerticalAxisName() {
-        return null;
+        return verticalName;
     }
 
     @Override
     public String getHorizontalAxisName() {
-        return null;
+        return horizontalName;
+    }
+
+    @Override
+    public String getDataAsJson() {
+        String ret = "[";
+        for ( Data data : allData ) {
+            ret += "[" + i + ",";
+            for ( Hotel hotel : data.hotels ) {
+                ret += hotel.rooms + ",";
+            }
+            for ( Network network : data.networks ) {
+                ret += network.devies + ",";
+            }
+            ret += "]";
+        }
+        ret += "]";
+        return ret;
     }
 }

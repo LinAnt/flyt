@@ -29,4 +29,10 @@ public interface LineChartDataAdapter {
      * @return the name of horizontal axis
      */
     public String getHorizontalAxisName();
+
+    /**
+     * Get data as json string
+     * @return a json string
+     */
+    public String getDataAsJson();
 }
