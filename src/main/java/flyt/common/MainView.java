@@ -4,6 +4,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.VerticalLayout;
 
+import java.util.List;
+
 /**
  * Created by acl on 10/30/2016.
  */
@@ -12,6 +14,11 @@ public class MainView extends MainDesign {
     public MainView(){
         super();
         clearContent();
+        // TODO
+        // fixa customerlist!
+        for (Customer C : customerList){
+           customerListSelect.addItem(C);
+        }
         serverBar.getItems().get(0).addItem("Server4", (MenuBar.Command) menuItem -> System.out.println("Server4"));
         logoutButton.addClickListener(e -> {
             System.out.println("User Logged Out");
