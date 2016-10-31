@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;mytheme&quot;}">
+  <meta charset="UTF-8" name="vaadin-version" content="7.7.0">
+ </head> 
+ <body> 
+  <vaadin-vertical-layout size-full> 
+   <vaadin-form-layout size-full> 
+    <vaadin-text-field caption="Name:" _id="customerName"></vaadin-text-field> 
+    <vaadin-text-field caption="Billing Information" _id="customerBillingInfo"></vaadin-text-field> 
+    <vaadin-list-select caption="List Of Servers:" width="185px" height="118px" _id="serverList"> 
+     <option>testerver1</option> 
+    </vaadin-list-select> 
+    <vaadin-button icon="fonticon://FontAwesome/f00d" width="183px" plain-text _id="deleteServerButton">
+      Remove Selected 
+    </vaadin-button> 
+    <vaadin-horizontal-layout> 
+     <vaadin-text-field width="103px"></vaadin-text-field> 
+     <vaadin-button icon="fonticon://FontAwesome/f067" width="78px" plain-text _id="serverAddButton">
+       Add 
+     </vaadin-button> 
+    </vaadin-horizontal-layout> 
+   </vaadin-form-layout> 
+  </vaadin-vertical-layout>  
+ </body>
+</html>

@@ -29,7 +29,9 @@ public class MainView extends MainDesign {
             });
             List<Customer> customerList = Backend.getInstance().getCustomers();
             customerListSelect.setNullSelectionAllowed(false);
+
             for (Customer C : customerList) {
+
                 customerListSelect.addItem(C.name);
             }
             MenuBar.MenuItem menuItem = serverBar.getItems().get(0);
@@ -41,7 +43,9 @@ public class MainView extends MainDesign {
             customerListSelect.addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
                 public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                    System.out.println("Display Customer stats");
+                    String a = (String)customerListSelect.getValue();
+                    String customer = customerListSelect.getContainerDataSource().getItem(a).toString();
+                    setContent(new customerFormView(customer));
                 }
             });
             logoutButton.addClickListener(e -> {
@@ -59,7 +63,13 @@ public class MainView extends MainDesign {
         content.removeAllComponents();
         content.addComponent(l);
     }
-    private void setContent(List<Component> c){
+    public void setContent(Component c){
+
+        content.removeAllComponents();
+        content.addComponent(c);
+
+    }
+    public void setContent(List<Component> c){
         content.removeAllComponents();
         for(Component a : c){
            content.addComponent(a);
