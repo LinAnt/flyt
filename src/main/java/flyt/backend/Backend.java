@@ -127,10 +127,87 @@ public class Backend {
                     return customer.name;
                 }
             } );
-            return byName.immutableSortedCopy( customers );
+            return byName.sortedCopy( customers );
         } catch ( IOException ioe ) {
             throw new FlytException( "ioe: " + ioe.getMessage() );
         }
+    }
+
+    /**
+     * Update customer information of an existing customer
+     * @param oldCustomerName the customers old name
+     * @param newCustomerData customer information
+     * @throws FlytException on error
+     */
+    public void updateCustomer( String oldCustomerName, Customer newCustomerData ) throws FlytException {
+        try {
+            List<Customer> allCustomers = getCustomers();
+            if ( !oldCustomerName.equals( newCustomerData.name) && contains( newCustomerData.name, allCustomers ) ) {
+                throw new FlytException( "A customer with that name already exists." );
+            }
+            for (int i = 0; i < allCustomers.size(); i++) {
+                if (allCustomers.get(i).name.equals(oldCustomerName)) {
+                    allCustomers.set(i, newCustomerData);
+                    break;
+                }
+            }
+            mapper.writeValue(new File(DATA_DIRECTORY + "customers.json"), allCustomers);
+        } catch ( IOException ioe ) {
+            throw new FlytException( "ioe: " + ioe.getMessage() );
+        }
+    }
+
+    /**
+     * Add a new customer
+     * @param customer new customer data
+     * @throws FlytException on error
+     */
+    public void addCustomer( Customer customer ) throws FlytException {
+        try {
+            List<Customer> allCustomers = getCustomers();
+            if ( contains( customer.name, allCustomers ) ) {
+                throw new FlytException( "A customer with that name already exists." );
+            }
+            allCustomers.add( customer );
+            mapper.writeValue(new File(DATA_DIRECTORY + "customers.json"), allCustomers);
+        } catch ( IOException ioe ) {
+            throw new FlytException( "ioe: " + ioe.getMessage() );
+        }
+    }
+
+    /**
+     * Remove customer
+     * @param name name of customer to remove
+     * @throws FlytException on error
+     */
+    public void removeCustomer( String name ) throws FlytException {
+        try {
+            List<Customer> allCustomers = getCustomers();
+            for ( int i = 0; i < allCustomers.size(); i ++ ) {
+                if ( allCustomers.get( i ).name.equals( name ) ) {
+                    allCustomers.remove( i );
+                    break;
+                }
+            }
+            mapper.writeValue(new File(DATA_DIRECTORY + "customers.json"), allCustomers);
+        } catch ( IOException ioe ) {
+            throw new FlytException( "ioe: " + ioe.getMessage() );
+        }
+    }
+
+    /**
+     * Check if customer exist
+     * @param name name of customer to check
+     * @param allCustomers a list of all customers
+     * @return true if customer exists, false if customer does not exist
+     */
+    public static boolean contains( String name, List<Customer> allCustomers ) {
+        for ( Customer customer : allCustomers ) {
+            if ( customer.name.equals( name ) )  {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
