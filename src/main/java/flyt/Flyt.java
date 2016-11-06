@@ -6,6 +6,7 @@ import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.Page;
+import com.vaadin.server.Sizeable;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
@@ -31,7 +32,7 @@ public class Flyt extends UI {
      * Set VERSION = 1 for Vaadin designer version
      * Set VERSION = 2 for hand made version
      */
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -56,14 +57,18 @@ public class Flyt extends UI {
         if ( VERSION == 2 ) {
             setBody(new WelcomeView());
         }
+
+        setSizeFull();
     }
 
     public void setBody( Component body ) {
+        HorizontalSplitPanel hsplit = new HorizontalSplitPanel();
         MenuView menuView = new MenuView( this );
-        HorizontalLayout vl = new HorizontalLayout();
-        vl.addComponent( menuView );
-        vl.addComponent( body );
-        setContent( vl );
+        hsplit.setFirstComponent(menuView);
+        hsplit.setSecondComponent(body);
+        hsplit.setSplitPosition(20, Sizeable.Unit.PERCENTAGE );
+
+        setContent( hsplit );
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
