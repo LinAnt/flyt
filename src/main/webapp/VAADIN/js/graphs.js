@@ -1,3 +1,9 @@
+window.onresize = function() {
+    if(this.resizeTO) clearTimeout(this.resizeTO);
+    this.resizeTO = setTimeout(function() {
+        document.dispatchEvent(new CustomEvent('resizeEnd'));
+    }, 200);
+};
 var graph = {
     createPieChart : function  ( values, settings ) {
         google.charts.load('current', {'packages': ['corechart']});
@@ -12,6 +18,10 @@ var graph = {
         };
         var chart = new google.visualization.PieChart( document.getElementById( settings.container ) );
         chart.draw(data, options);
+
+        document.addEventListener('resizeEnd', function(customEvent) {
+            graph.drawPieChart( values, settings );
+        });
     },
 
     createLineChart : function ( values, settings ) {
@@ -42,6 +52,10 @@ var graph = {
         };
         var chart = new google.visualization.LineChart( document.getElementById( settings.container ));
         chart.draw(data, options);
+
+        document.addEventListener('resizeEnd', function(customEvent) {
+            graph.drawLineChart( values, settings );
+        });
     },
     createBarChart : function ( data, container, options ) {
 
