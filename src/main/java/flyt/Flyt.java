@@ -48,14 +48,18 @@ public class Flyt extends UI {
         setSizeFull();
     }
 
+    private MenuView menuView = null;
     public void setBody( Component body ) {
         HorizontalSplitPanel hsplit = new HorizontalSplitPanel();
-        MenuView menuView = new MenuView( this );
+        menuView = new MenuView( this );
         hsplit.setFirstComponent(menuView);
         hsplit.setSecondComponent(body);
         hsplit.setSplitPosition(20, Sizeable.Unit.PERCENTAGE );
 
         setContent( hsplit );
+    }
+    public MenuView getMenu() {
+        return menuView;
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)

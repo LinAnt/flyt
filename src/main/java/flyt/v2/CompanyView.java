@@ -1,6 +1,7 @@
 package flyt.v2;
 
 import com.vaadin.ui.*;
+import flyt.Flyt;
 import flyt.backend.Backend;
 import flyt.common.Customer;
 import flyt.common.FlytException;
@@ -13,16 +14,16 @@ import java.util.List;
 public class CompanyView extends CustomComponent {
     private final boolean newCustomer;
     private Customer customer;
-    private final MenuView menu;
+    private final Flyt flyt;
 
-    public CompanyView( MenuView menu ) {
-        this.menu = menu;
+    public CompanyView( Flyt flyt ) {
+        this.flyt = flyt ;
         newCustomer = true;
         customer = null;
         update();
     }
-    public CompanyView( MenuView menu, String company ) {
-        this.menu = menu;
+    public CompanyView( Flyt flyt, String company ) {
+        this.flyt = flyt;
         newCustomer = false;
         try {
             List<Customer> allCustomers = Backend.getInstance().getCustomers();
@@ -52,8 +53,9 @@ public class CompanyView extends CustomComponent {
                     try {
                         Customer c = new Customer();
                         c.name = companyName.getValue();
+                        c.contact = companyContact.getValue();
                         Backend.getInstance().addCustomer(c);
-                        menu.update();
+                        flyt.getMenu().update();
                     } catch ( FlytException fe ) {
                         Notification.show( fe.getMessage(), Notification.Type.ERROR_MESSAGE );
                     }
@@ -63,7 +65,12 @@ public class CompanyView extends CustomComponent {
             Button save = new Button("Save");
             form.addComponent(save);
             if (customer != null) {
-                companyName.setValue(customer.name);
+                if ( customer.name != null ) {
+                    companyName.setValue(customer.name);
+                }
+                if ( customer.contact != null ) {
+                    companyContact.setValue(customer.contact);
+                }
                 save.setEnabled(true);
             } else {
                 save.setEnabled(false);
@@ -74,12 +81,29 @@ public class CompanyView extends CustomComponent {
                     try {
                         String oldName = customer.name;
                         customer.name = companyName.getValue();
+                        customer.contact = companyContact.getValue();
                         Backend.getInstance().updateCustomer(oldName, customer);
-                        menu.update();
+                        flyt.getMenu().update();
+                        flyt.setBody( new WelcomeView() );
+                        Notification.show( "Customer has been updated", Notification.Type.ASSISTIVE_NOTIFICATION );
                     } catch ( FlytException fe ) {
                         Notification.show( fe.getMessage(), Notification.Type.ERROR_MESSAGE );
                     }
 
+                }
+            });
+            Button remove = new Button( "Remove" );
+            form.addComponent( remove );
+            remove.addClickListener( new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    try {
+                        Backend.getInstance().removeCustomer( customer.name );
+                        flyt.getMenu().update();
+                        Notification.show( "CUstomer has been removed", Notification.Type.WARNING_MESSAGE );
+                    } catch (FlytException fe) {
+                        Notification.show( fe.getMessage(), Notification.Type.ERROR_MESSAGE );
+                    }
                 }
             });
         }

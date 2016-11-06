@@ -47,6 +47,9 @@ public class MenuView extends CustomComponent {
                         String sourceParent = (String)customerTree.getParent( sourceName);
                         Customer sourceCustomer = backend.getCustomerByServer(sourceName);
                         String targetName = (String)target.getItemIdOver();
+                        if ( targetName == null ) { // wtf
+                            return;
+                        }
                         if ( targetName.equals( UNASSIGNED_SERVERS) || backend.isCustomer( targetName) ) {
                             if (sourceParent != null && sourceCustomer != null) {
                                 int i = sourceCustomer.servers.indexOf(sourceName);
@@ -74,7 +77,7 @@ public class MenuView extends CustomComponent {
                     return AcceptAll.get();
                 }
             });
-            customerTree.addValueChangeListener( new OwnValueChangeListener( this ));
+            customerTree.addValueChangeListener( new OwnValueChangeListener( flyt ));
             for ( Customer customer : allCustomers ) {
                 customerTree.addItem( customer.name );
                 customerTree.expandItem( customer.name );
@@ -93,7 +96,7 @@ public class MenuView extends CustomComponent {
             }
             vl.addComponent( customerTree );
             Button addCustomer = new Button( "Add customer" );
-            addCustomer.addClickListener(new OwnButtonListener( this ) );
+            addCustomer.addClickListener(new OwnButtonListener( flyt ) );
             vl.addComponent( addCustomer );
             setCompositionRoot( vl );
         } catch ( FlytException fe ) {
@@ -103,31 +106,33 @@ public class MenuView extends CustomComponent {
 
     class OwnButtonListener implements Button.ClickListener {
 
-        private final MenuView menu;
-        public OwnButtonListener( MenuView menu ) {
-            this.menu = menu;
+        private final Flyt flyt;
+        public OwnButtonListener( Flyt flyt) {
+            this.flyt = flyt;
         }
         @Override
         public void buttonClick(Button.ClickEvent clickEvent) {
-            flyt.setBody( new CompanyView( menu ) );
+            flyt.setBody( new CompanyView( flyt) );
         }
     }
 
     class OwnValueChangeListener implements Property.ValueChangeListener {
 
-        private final MenuView menu;
-        public OwnValueChangeListener( MenuView menu ) {
-            this.menu = menu;
+        private final Flyt flyt;
+        public OwnValueChangeListener( Flyt flyt ) {
+            this.flyt = flyt;
         }
         @Override
         public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
             try {
                 String clickedValue = (String)valueChangeEvent.getProperty().getValue();
-                if ( clickedValue.equals( UNASSIGNED_SERVERS ) ) {
+                if ( clickedValue == null ) { // wtf
                     return;
                 }
-                if ( Backend.getInstance().isCustomer( clickedValue ) ) {
-                    flyt.setBody(new CompanyView(menu, clickedValue ) );
+                if ( clickedValue.equals( UNASSIGNED_SERVERS ) ) {
+                    flyt.setBody( new WelcomeView() );
+                } else if ( Backend.getInstance().isCustomer( clickedValue ) ) {
+                    flyt.setBody(new CompanyView(flyt, clickedValue ) );
                 } else {
                     flyt.setBody(new ServerView(clickedValue) );
                 }
