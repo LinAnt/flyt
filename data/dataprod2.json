@@ -1,0 +1,22 @@
+{
+  "header": {
+    "version":1,
+    "senderId":"production server",
+    "date":"2016-10-26T10:02Z"
+  },
+  "hotels":[{
+      "name":"Hotel California",
+      "rooms":340
+    }, {
+      "name":"Fredriks B&B",
+      "rooms":10
+    }]
+  ,
+  "networks": [{
+    "name":"Watson",
+    "devices":36000
+  },{
+    "name":"Smooth operator",
+    "devices":3100
+  }]
+}

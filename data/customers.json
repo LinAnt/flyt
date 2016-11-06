@@ -1,1 +1,1 @@
-[{"name":"Byggis Inc","servers":["testserver1"]}]
+[{"name":"Byggis Inc","contact":"Byggis Inc\nTurkutie 42\nTurku","servers":["testserver1","production server"]},{"name":"Evil company","contact":"We contact you","servers":[]},{"name":"Other company","contact":"Some adress","servers":[]}]
