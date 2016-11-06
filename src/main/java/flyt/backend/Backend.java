@@ -115,6 +115,35 @@ public class Backend {
     }
 
     /**
+     * Get a list of all servers that are not assigned
+     * @return a list of unassigned servers, never null
+     */
+    public List<String> getUnassignedServers() throws FlytException {
+        List<String> serverList = Lists.newArrayList();
+        List<Customer> allCustomers = getCustomers();
+        for ( String dataFile : getDataList() ) {
+            Data data = getData( dataFile );
+            if ( serverList.contains( data.header.senderId ) ) {
+                continue;
+            }
+            boolean found = false;
+            for ( Customer customer : allCustomers ) {
+                for ( String server : customer.servers ) {
+                    if ( server.equals( data.header.senderId ) ) {
+                        found = true;
+                    }
+                }
+            }
+            if ( found ) {
+                continue;
+            }
+            serverList.add( data.header.senderId );
+        }
+        return serverList;
+    }
+
+
+    /**
      * Return a list of customers
      * @return a list of customers
      * @throws FlytException on error
@@ -131,6 +160,39 @@ public class Backend {
         } catch ( IOException ioe ) {
             throw new FlytException( "ioe: " + ioe.getMessage() );
         }
+    }
+
+    /**
+     * Get customer by name
+     * @param customerName name of customer
+     * @return instance of customer or null if not found
+     * @throws FlytException on error
+     */
+    public Customer getCustomerByName( String customerName ) throws FlytException {
+        List<Customer> allCustomers = getCustomers();
+        for ( Customer customer : allCustomers ) {
+            if ( customer.name.equals( customerName ) ) {
+                return customer;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get a customer by server id
+     * @return a customer or null if server not found
+     * @throws FlytException on error
+     */
+    public Customer getCustomerByServer( String serverId ) throws FlytException {
+        List<Customer> allCustomers = getCustomers();
+        for ( Customer c : allCustomers ) {
+            for ( String server : c.servers ) {
+                if ( server.equals( serverId ) ) {
+                    return c;
+                }
+            }
+        }
+        return null;
     }
 
     /**
