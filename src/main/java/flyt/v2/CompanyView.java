@@ -100,6 +100,7 @@ public class CompanyView extends CustomComponent {
                     try {
                         Backend.getInstance().removeCustomer( customer.name );
                         flyt.getMenu().update();
+                        flyt.setBody( new WelcomeView() );
                         Notification.show( "CUstomer has been removed", Notification.Type.WARNING_MESSAGE );
                     } catch (FlytException fe) {
                         Notification.show( fe.getMessage(), Notification.Type.ERROR_MESSAGE );
