@@ -1,23 +1,17 @@
 package flyt.v2;
 
-import com.vaadin.data.Item;
 import com.vaadin.data.Property;
-import com.vaadin.event.Action;
 import com.vaadin.event.Transferable;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Tree;
+import com.vaadin.ui.*;
 import flyt.Flyt;
 import flyt.backend.Backend;
 import flyt.common.Customer;
 import flyt.common.FlytException;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -30,9 +24,9 @@ public class MenuView extends CustomComponent {
         this.flyt = flyt;
         update();
     }
-    private void update() {
-
+    public void update() {
         try {
+            VerticalLayout vl = new VerticalLayout();
             List<Customer> allCustomers = Backend.getInstance().getCustomers();
             Tree customerTree = new Tree();
             customerTree.setDragMode(Tree.TreeDragMode.NODE);
@@ -80,24 +74,7 @@ public class MenuView extends CustomComponent {
                     return AcceptAll.get();
                 }
             });
-            customerTree.addValueChangeListener( new Property.ValueChangeListener() {
-                @Override
-                public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                    try {
-                        String clickedValue = (String)valueChangeEvent.getProperty().getValue();
-                        if ( clickedValue.equals( UNASSIGNED_SERVERS ) ) {
-                            return;
-                        }
-                        if ( Backend.getInstance().isCustomer( clickedValue ) ) {
-                            flyt.setBody(new CompanyView(clickedValue));
-                        } else {
-                            flyt.setBody(new ServerView(clickedValue) );
-                        }
-                    } catch ( FlytException fe ) {
-                        Notification.show( fe.getMessage(), Notification.Type.ERROR_MESSAGE );
-                    }
-                }
-            });
+            customerTree.addValueChangeListener( new OwnValueChangeListener( this ));
             for ( Customer customer : allCustomers ) {
                 customerTree.addItem( customer.name );
                 customerTree.expandItem( customer.name );
@@ -114,9 +91,49 @@ public class MenuView extends CustomComponent {
                 customerTree.setParent( serverId, UNASSIGNED_SERVERS );
                 customerTree.setChildrenAllowed( serverId, false );
             }
-            setCompositionRoot( customerTree );
+            vl.addComponent( customerTree );
+            Button addCustomer = new Button( "Add customer" );
+            addCustomer.addClickListener(new OwnButtonListener( this ) );
+            vl.addComponent( addCustomer );
+            setCompositionRoot( vl );
         } catch ( FlytException fe ) {
             Notification.show( fe.getMessage(), Notification.Type.ERROR_MESSAGE );
+        }
+    }
+
+    class OwnButtonListener implements Button.ClickListener {
+
+        private final MenuView menu;
+        public OwnButtonListener( MenuView menu ) {
+            this.menu = menu;
+        }
+        @Override
+        public void buttonClick(Button.ClickEvent clickEvent) {
+            flyt.setBody( new CompanyView( menu ) );
+        }
+    }
+
+    class OwnValueChangeListener implements Property.ValueChangeListener {
+
+        private final MenuView menu;
+        public OwnValueChangeListener( MenuView menu ) {
+            this.menu = menu;
+        }
+        @Override
+        public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+            try {
+                String clickedValue = (String)valueChangeEvent.getProperty().getValue();
+                if ( clickedValue.equals( UNASSIGNED_SERVERS ) ) {
+                    return;
+                }
+                if ( Backend.getInstance().isCustomer( clickedValue ) ) {
+                    flyt.setBody(new CompanyView(menu, clickedValue ) );
+                } else {
+                    flyt.setBody(new ServerView(clickedValue) );
+                }
+            } catch ( FlytException fe ) {
+                Notification.show( fe.getMessage(), Notification.Type.ERROR_MESSAGE );
+            }
         }
     }
 }

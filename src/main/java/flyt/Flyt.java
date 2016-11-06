@@ -37,19 +37,6 @@ public class Flyt extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-        Backend backend = Backend.getInstance();
-        Data data = null;
-        try {
-            List<Customer> customers = backend.getCustomers();
-            List<String> files = backend.getDataList();
-            for ( String file : files ) {
-                System.out.println( "Found file: " + file );
-                data = backend.getData( file );
-            }
-        } catch ( FlytException fe ) {
-            System.out.println( fe.getMessage() );
-        }
-
         if ( VERSION == 1 ) {
             MainView layout = new MainView();
             setContent(layout);
