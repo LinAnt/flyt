@@ -134,6 +134,22 @@ public class Backend {
     }
 
     /**
+     * Check if customer exists
+     * @param name a customer name
+     * @return true or false depending on if customer exists
+     * @throws FlytException on error
+     */
+    public boolean isCustomer( String name ) throws FlytException {
+        List<Customer> allCustomers = getCustomers();
+        for ( Customer cusromer : allCustomers ) {
+            if ( cusromer.name.equals( name ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Update customer information of an existing customer
      * @param oldCustomerName the customers old name
      * @param newCustomerData customer information

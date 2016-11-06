@@ -11,6 +11,8 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import flyt.backend.Backend;
 import flyt.common.*;
+import flyt.v2.MenuView;
+import flyt.v2.WelcomeView;
 
 import java.util.List;
 
@@ -24,6 +26,12 @@ import java.util.List;
 @Theme("mytheme")
 @JavaScript( {"https://www.gstatic.com/charts/loader.js","vaadin://js/graphs.js"} )
 public class Flyt extends UI {
+
+    /**
+     * Set VERSION = 1 for Vaadin designer version
+     * Set VERSION = 2 for hand made version
+     */
+    public static final int VERSION = 1;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -41,13 +49,21 @@ public class Flyt extends UI {
             System.out.println( fe.getMessage() );
         }
 
-        MainView layout = new MainView();
+        if ( VERSION == 1 ) {
+            MainView layout = new MainView();
+            setContent(layout);
+        }
+        if ( VERSION == 2 ) {
+            setBody(new WelcomeView());
+        }
+    }
 
-        setContent(layout);
-
-
-
-
+    public void setBody( Component body ) {
+        MenuView menuView = new MenuView( this );
+        HorizontalLayout vl = new HorizontalLayout();
+        vl.addComponent( menuView );
+        vl.addComponent( body );
+        setContent( vl );
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
